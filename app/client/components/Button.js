@@ -5,9 +5,9 @@ export default class Button extends React.Component {
 
     static propTypes = {
         text: React.PropTypes.string,
-        icon: React.PropTypes.string,
         disabled: React.PropTypes.bool,
         isActive: React.PropTypes.bool,
+        style: React.PropTypes.object,
 
         onClick: React.PropTypes.func,
     }
@@ -17,7 +17,13 @@ export default class Button extends React.Component {
     }
 
     render() {
-        const { text, disabled, isActive, onClick } = this.props;
+        const {
+            text,
+            disabled,
+            isActive,
+            style,
+            onClick,
+        } = this.props;
 
         let buttonStyle = STYLES.button;
 
@@ -34,6 +40,10 @@ export default class Button extends React.Component {
                 ...STYLES.disabledButton,
             };
         }
+        buttonStyle = {
+            ...buttonStyle,
+            ...style,
+        };
 
         return (
             <button style={buttonStyle} disabled={disabled} onClick={onClick}>
@@ -58,8 +68,5 @@ const STYLES = {
     },
     disabledButton: {
         opacity: 0.8,
-    },
-    icon: {
-        marginRight: 10,
     },
 };
