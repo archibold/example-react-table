@@ -16,7 +16,7 @@ export default class TableGuideComponent extends React.Component {
     render() {
         const { onChangeSorting } = this;
         const { sortBy } = this.state;
-        // console.log(sortBy);
+
         const header = ['Id', 'User name', 'Post title', 'Views', 'Likes', 'Created at'];
 
         const list = [

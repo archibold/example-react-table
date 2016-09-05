@@ -60,7 +60,7 @@ const STYLES = {
         color: 'white',
         border: 0,
         fontSize: '15px',
-
+        padding: '15px',
         // outline: 'none',
     },
     activeButton: {
