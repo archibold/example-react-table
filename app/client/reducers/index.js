@@ -11,9 +11,11 @@
  */
 
 import { appReducer } from 'reducers/app-reducer';
+import { tableReducer } from 'reducers/table-reducer';
 /* reapp: import new reducer */
 
 export const reducers = {
     app: appReducer,
+    table: tableReducer,
     /* reapp: append new reducer */
 };

@@ -13,6 +13,7 @@ export default class Pagination extends React.Component {
 
     static defaultProps = {
         activePage: 1,
+        onSelect: () => {},
     }
 
     render() {

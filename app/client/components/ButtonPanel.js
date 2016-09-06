@@ -7,16 +7,18 @@ export default class ButtonPanel extends React.Component {
     static propTypes = {
         activeButon: React.PropTypes.string,
         list: React.PropTypes.array,
+        style: React.PropTypes.object,
 
         onSelect: React.PropTypes.func,
     }
 
     static defaultProps = {
         list: [],
+        onSelect: () => {},
     }
 
     render() {
-        const { list, activeButon } = this.props;
+        const { list, activeButon, style } = this.props;
         const { onClick } = this;
 
         const listElement = list.map((object, index) => {
@@ -33,7 +35,7 @@ export default class ButtonPanel extends React.Component {
         });
 
         return (
-            <div>
+            <div style={style}>
                 {listElement}
             </div>
         );
