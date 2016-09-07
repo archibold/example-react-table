@@ -17,8 +17,6 @@ export default class TableGuideComponent extends React.Component {
         const { onChangeSorting } = this;
         const { sortBy, direction } = this.state;
 
-        const header = ['Id', 'User name', 'Post title', 'Views', 'Likes', 'Created at'];
-
         const list = [
             {
                 Id: 1,
@@ -43,7 +41,6 @@ export default class TableGuideComponent extends React.Component {
 
                 <SGSection title="Table">
                     <Table
-                        headers={header}
                         list={list}
                         direction={direction}
                         onChangeSorting={onChangeSorting}
@@ -53,7 +50,6 @@ export default class TableGuideComponent extends React.Component {
 
                 <SGSection title="Table - with active user">
                     <Table
-                        headers={header}
                         list={list}
                         direction={direction}
                         activeUser="Konna"

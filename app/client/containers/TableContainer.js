@@ -26,7 +26,6 @@ import {
         maxPage,
         sortBy,
         direction,
-        headers,
         activePage,
         activeUser,
     } = state.table;
@@ -45,7 +44,6 @@ import {
         list: newList,
         sortBy,
         direction,
-        headers,
         activePage,
         maxPage,
         activeUser,
@@ -60,7 +58,6 @@ export default class TableContainer extends React.Component {
         list: React.PropTypes.array,
         sortBy: React.PropTypes.string,
         direction: React.PropTypes.string,
-        headers: React.PropTypes.array,
         activePage: React.PropTypes.number,
         maxPage: React.PropTypes.number,
         activeUser: React.PropTypes.string,
@@ -81,7 +78,6 @@ export default class TableContainer extends React.Component {
             list,
             sortBy,
             direction,
-            headers,
             activePage,
             maxPage,
             activeUser,
@@ -111,7 +107,6 @@ export default class TableContainer extends React.Component {
                 </div>
                 <div style={STYLES.content}>
                     <Table
-                        headers={headers}
                         list={list}
                         sortBy={sortBy}
                         direction={direction}

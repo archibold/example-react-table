@@ -5,7 +5,6 @@ import Button from 'components/Button';
 export default class Table extends React.Component {
 
     static propTypes = {
-        headers: React.PropTypes.array,
         list: React.PropTypes.array,
         sortBy: React.PropTypes.string,
         direction: React.PropTypes.string,
@@ -23,9 +22,9 @@ export default class Table extends React.Component {
     }
 
     render() {
-        const { headers, list, sortBy, direction, activeUser } = this.props;
+        const { list, sortBy, direction, activeUser } = this.props;
         const { onChangeSorting } = this;
-
+        const headers = ['Id', 'User name', 'Post title', 'Views', 'Likes', 'Created at'];
         const headerElement = headers.map((headerName, index) => {
             let value = headerName;
             if(sortBy.indexOf(headerName) !== -1) {

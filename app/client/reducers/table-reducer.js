@@ -25,7 +25,6 @@ export const INITIAL_STATE = {
     filtredList: [],
     sortBy: '',
     direction: 'DESC',
-    headers: ['Id', 'User name', 'Post title', 'Views', 'Likes', 'Created at'],
 
     activePage: 1,
     maxPage: 1,
