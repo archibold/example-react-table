@@ -15,11 +15,11 @@ module.exports = {
 
     // forward following urls to the api server
     proxyUrls: [
-        '/foo*',
+        '/dataset*',
     ],
 
     // forward following rules
     proxyRules: {
-        // '/foo': 'http://my-custom-server.com',
+        '/dataset': 'localhost:8080',
     },
 };
