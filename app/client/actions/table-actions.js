@@ -10,6 +10,7 @@ export const SET_FILTRED_LIST = 'setFiltredList@table';
 export const SET_LIST = 'setlist@table';
 export const SET_MAX_PAGE = 'setMaxPage@table';
 export const SET_DIRECTION = 'setDirection@table';
+export const SET_NEW_ROW = 'setNewRow@table';
 
 export function setList(value) {
 
@@ -69,6 +70,14 @@ export function setActivePage(value) {
 
     return {
         type: SET_ACTIVE_PAGE,
+        payload: value,
+    };
+}
+
+export function setNewRow(value) {
+
+    return {
+        type: SET_NEW_ROW,
         payload: value,
     };
 }

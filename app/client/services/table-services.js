@@ -7,6 +7,7 @@ import {
     setFiltredList as setFiltredListAction,
     setList as setListAction,
     setMaxPage as setMaxPageAction,
+    setNewRow as setNewRowAction,
 } from 'actions/table-actions';
 
 import request from 'superagent';
@@ -76,6 +77,34 @@ export function setSortBy(value, directionValue) {
         dispatch(setSortByAction(value));
         dispatch(setDirectionAction(directionValue));
         dispatch(setFiltredListAction(sortedList));
+    };
+}
+
+export function setNewRow(newRow) {
+    return (dispatch) => {
+        dispatch(setNewRowAction(newRow));
+    };
+}
+
+export function addNewRowToTable() {
+    return (dispatch, getState) => {
+        const {
+            newRow,
+            list,
+        } = getState().table;
+
+        let newList = [];
+        newList.push(newRow);
+        newList = newList.concat(list);
+
+        let newListFlitred = [];
+        newListFlitred.push(newRow);
+        newListFlitred = newListFlitred.concat(list);
+
+        dispatch(setListAction(newList));
+        dispatch(setFiltredListAction(newListFlitred));
+
+        dispatch(setNewRowAction(null));
     };
 }
 

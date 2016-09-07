@@ -8,23 +8,39 @@ export default class Table extends React.Component {
         list: React.PropTypes.array,
         sortBy: React.PropTypes.string,
         direction: React.PropTypes.string,
-
         activeUser: React.PropTypes.string,
+        newRow: React.PropTypes.object,
+
         onChangeSorting: React.PropTypes.func,
+        onChangeNewRow: React.PropTypes.func,
     }
 
     static defaultProps = {
         headers: [],
         list: [],
         sortBy: '',
+        newRow: null,
 
         onChangeSorting: () => {},
+        onChangeNewRow: () => {},
     }
 
     render() {
-        const { list, sortBy, direction, activeUser } = this.props;
-        const { onChangeSorting } = this;
+        const {
+            list,
+            sortBy,
+            direction,
+            activeUser,
+            newRow,
+        } = this.props;
+
+        const {
+            onChangeSorting,
+            onChangeNewRow,
+        } = this;
+
         const headers = ['Id', 'User name', 'Post title', 'Views', 'Likes', 'Created at'];
+
         const headerElement = headers.map((headerName, index) => {
             let value = headerName;
             if(sortBy.indexOf(headerName) !== -1) {
@@ -46,8 +62,22 @@ export default class Table extends React.Component {
 
         const listElement = list.map((row, index) => {
             const rowElement = headers.map((headerName, rowIndex) => {
+                let elementStyle={};
+
+                if (['Id', 'Views', 'Likes'].indexOf(headerName) > -1) {
+                    elementStyle={
+                        textAlign: 'right',
+                    };
+                }
+
+                if (['Created at'].indexOf(headerName) > -1) {
+                    elementStyle={
+                        textAlign: 'center',
+                    };
+                }
+
                 return (
-                    <td key={rowIndex}>
+                    <td style={elementStyle} key={rowIndex}>
                         {row[headerName]}
                     </td>
                 );
@@ -62,6 +92,28 @@ export default class Table extends React.Component {
             );
         });
 
+        let newRowElement = null;
+        if (newRow !== null) {
+            newRowElement = headers.map((headerName, rowIndex) => {
+                let elementType = 'text';
+                if (['Id', 'Views', 'Likes'].indexOf(headerName) > -1) {
+                    elementType= 'number';
+                }
+
+                return (
+                    <td key={rowIndex}>
+                        <input
+                            value={newRow[headerName]}
+                            type={elementType}
+                            onChange={(e) => {
+                                onChangeNewRow(headerName, e.target.value);
+                            }}
+                        />
+                    </td>
+                );
+            });
+        }
+
         return (
             <table>
                 <thead>
@@ -70,6 +122,9 @@ export default class Table extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                        {newRowElement}
+                    </tr>
                     {listElement}
                 </tbody>
             </table>
@@ -83,6 +138,17 @@ export default class Table extends React.Component {
             newDirection = (direction === 'ASC')? 'DESC' : 'ASC';
         }
         onChangeSorting(headerName, newDirection);
+    }
+
+    onChangeNewRow = (headerName, value) => {
+        const {
+            onChangeNewRow,
+            newRow,
+        } = this.props;
+
+        const updatedNewRow = newRow;
+        updatedNewRow[headerName] = value;
+        onChangeNewRow(updatedNewRow);
     }
 }
 

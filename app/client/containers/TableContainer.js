@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 // Components:
 import Input from 'components/Input';
 import ButtonPanel from 'components/ButtonPanel';
+import Button from 'components/Button';
 import Table from 'components/Table';
 import Pagination from 'components/Pagination';
 
@@ -15,6 +16,8 @@ import {
     setSortBy,
     setActivePage,
     init,
+    setNewRow,
+    addNewRowToTable,
 } from 'services/table-services';
 
 @connect(state => {
@@ -28,6 +31,7 @@ import {
         direction,
         activePage,
         activeUser,
+        newRow,
     } = state.table;
 
     // SET PAGES
@@ -47,6 +51,7 @@ import {
         activePage,
         maxPage,
         activeUser,
+        newRow,
     };
 })
 export default class TableContainer extends React.Component {
@@ -61,6 +66,7 @@ export default class TableContainer extends React.Component {
         activePage: React.PropTypes.number,
         maxPage: React.PropTypes.number,
         activeUser: React.PropTypes.string,
+        newRow: React.PropTypes.object,
 
         dispatch: React.PropTypes.func,
     }
@@ -81,6 +87,7 @@ export default class TableContainer extends React.Component {
             activePage,
             maxPage,
             activeUser,
+            newRow,
         } = this.props;
 
         const {
@@ -88,6 +95,7 @@ export default class TableContainer extends React.Component {
             onInputChange,
             onSelectRow,
             onChangeSorting,
+            onAddNewRow,
         } = this;
 
         return (
@@ -109,6 +117,7 @@ export default class TableContainer extends React.Component {
                     <Table
                         list={list}
                         sortBy={sortBy}
+                        newRow={newRow}
                         direction={direction}
                         activeUser={activeUser}
                         onChangeSorting={onChangeSorting}
@@ -119,6 +128,13 @@ export default class TableContainer extends React.Component {
                         maxPage={maxPage}
                         activePage={activePage}
                         onSelect={onSelectPage}
+                    />
+                </div>
+                <div>
+                    <Button
+                        text={ newRow === null ? 'Add New Row' : 'Accept' }
+                        onClick={onAddNewRow}
+                        style={STYLES.addNewRowButton}
                     />
                 </div>
             </div>
@@ -144,6 +160,17 @@ export default class TableContainer extends React.Component {
         const { dispatch } = this.props;
         dispatch(setSortBy(sortBy, direction));
     }
+
+    onAddNewRow = () => {
+        const { dispatch, newRow } = this.props;
+        if (newRow === null) {
+            dispatch(setNewRow({}));
+        } else {
+            console.log('add to table and finish it!');
+            dispatch(addNewRowToTable());
+            dispatch(setNewRow(null));
+        }
+    }
 }
 
 const STYLES = {
@@ -160,5 +187,8 @@ const STYLES = {
     },
     footer: {
         display: 'flex',
+    },
+    addNewRowButton: {
+        marginTop: '5px',
     },
 };

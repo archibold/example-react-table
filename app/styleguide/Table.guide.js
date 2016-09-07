@@ -7,15 +7,16 @@ import Table from 'components/Table';
 export default class TableGuideComponent extends React.Component {
     static state: {
         sortBy: 'none';
+        newRow: {};
     }
 
     componentWillMount() {
-        this.setState({ sortBy: 'none' });
+        this.setState({ sortBy: 'none', newRow: {} });
     }
 
     render() {
-        const { onChangeSorting } = this;
-        const { sortBy, direction } = this.state;
+        const { onChangeSorting, onChangeNewRow } = this;
+        const { sortBy, direction, newRow } = this.state;
 
         const list = [
             {
@@ -39,15 +40,6 @@ export default class TableGuideComponent extends React.Component {
         return (
             <SGPage>
 
-                <SGSection title="Table">
-                    <Table
-                        list={list}
-                        direction={direction}
-                        onChangeSorting={onChangeSorting}
-                        sortBy={sortBy}
-                    />
-                </SGSection>
-
                 <SGSection title="Table - with active user">
                     <Table
                         list={list}
@@ -58,11 +50,26 @@ export default class TableGuideComponent extends React.Component {
                     />
                 </SGSection>
 
+                <SGSection title="Table - add new row">
+                    <Table
+                        list={list}
+                        direction={direction}
+                        onChangeSorting={onChangeSorting}
+                        sortBy={sortBy}
+                        newRow={newRow}
+                        onChangeNewRow={onChangeNewRow}
+                    />
+                </SGSection>
+
             </SGPage>
         );
     }
 
     onChangeSorting = (sortBy, direction) => {
         this.setState({ sortBy, direction });
+    }
+
+    onChangeNewRow = (newRow) => {
+        this.setState({ newRow });
     }
 }

@@ -11,6 +11,7 @@ import {
     SET_LIST,
     SET_MAX_PAGE,
     SET_DIRECTION,
+    SET_NEW_ROW,
 } from 'actions/table-actions';
 
 export const INITIAL_STATE = {
@@ -29,6 +30,8 @@ export const INITIAL_STATE = {
     activePage: 1,
     maxPage: 1,
     activeUser: 'Andrzej',
+
+    newRow: null,
 };
 
 export function tableReducer(state = INITIAL_STATE, action) {
@@ -42,6 +45,7 @@ export function tableReducer(state = INITIAL_STATE, action) {
         case SET_DIRECTION: return setDirection(state, payload);
         case SET_ACTIVE_PAGE: return setActivePage(state, payload);
         case SET_MAX_PAGE: return setMaxPage(state, payload);
+        case SET_NEW_ROW: return setNewRow(state, payload);
         default: return state;
     }
 }
@@ -98,5 +102,12 @@ function setMaxPage(state, payload) {
     return {
         ...state,
         maxPage: payload,
+    };
+}
+
+function setNewRow(state, payload) {
+    return {
+        ...state,
+        newRow: payload,
     };
 }
