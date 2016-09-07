@@ -20,6 +20,16 @@ export default class Pagination extends React.Component {
         const { maxPage, activePage } = this.props;
         const { onSelect } = this;
 
+        let inRangeActivePage = activePage;
+
+        if (activePage > maxPage) {
+            inRangeActivePage = maxPage;
+        }
+
+        if (activePage < 1) {
+            inRangeActivePage = 1;
+        }
+
         const buttonsElement = [...Array(maxPage).keys()].map((number, index) => {
             const buttonNumber = (number + 1);
             return (
@@ -29,7 +39,7 @@ export default class Pagination extends React.Component {
                     onClick={() => {
                         onSelect(buttonNumber);
                     }}
-                    isActive={ activePage === buttonNumber }
+                    isActive={ inRangeActivePage === buttonNumber }
                 />
             );
         });
@@ -39,27 +49,29 @@ export default class Pagination extends React.Component {
                 <Button text="«" onClick={() => {
                     onSelect(1);
                 }}
-                disabled={activePage === 1}
+                disabled={inRangeActivePage === 1}
                 />
                 <Button text="‹" onClick={() => {
-                    const selectedPage = (activePage-1 > 0)? activePage-1 : 1;
+                    const selectedPage = (
+                        inRangeActivePage-1 > 0)? inRangeActivePage-1 : 1;
                     onSelect(selectedPage);
                 }}
-                disabled={activePage === 1}
+                disabled={inRangeActivePage === 1}
                 />
 
                 {buttonsElement}
 
                 <Button text="›" onClick={() => {
-                    const selectedPage = (activePage+1 < maxPage)? activePage+1 : maxPage;
+                    const selectedPage = (
+                        inRangeActivePage+1 < maxPage) ? inRangeActivePage+1 : maxPage;
                     onSelect(selectedPage);
                 }}
-                disabled={activePage === maxPage}
+                disabled={inRangeActivePage === maxPage}
                 />
                 <Button text="»" onClick={() => {
                     onSelect(maxPage);
                 }}
-                disabled={activePage === maxPage}
+                disabled={inRangeActivePage === maxPage}
                 />
             </div>
         );

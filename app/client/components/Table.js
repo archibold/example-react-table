@@ -8,6 +8,7 @@ export default class Table extends React.Component {
         headers: React.PropTypes.array,
         list: React.PropTypes.array,
         sortBy: React.PropTypes.string,
+        direction: React.PropTypes.string,
 
         activeUser: React.PropTypes.string,
         onChangeSorting: React.PropTypes.func,
@@ -17,19 +18,20 @@ export default class Table extends React.Component {
         headers: [],
         list: [],
         sortBy: '',
+
         onChangeSorting: () => {},
     }
 
     render() {
-        const { headers, list, sortBy, activeUser } = this.props;
+        const { headers, list, sortBy, direction, activeUser } = this.props;
         const { onChangeSorting } = this;
 
         const headerElement = headers.map((headerName, index) => {
             let value = headerName;
             if(sortBy.indexOf(headerName) !== -1) {
-                if(sortBy.indexOf('ASC') !== -1) {
+                if(direction.indexOf('ASC') !== -1) {
                     value += ' ▼';
-                } else if(sortBy.indexOf('DESC') !== -1) {
+                } else if(direction.indexOf('DESC') !== -1) {
                     value += ' ▲';
                 }
             }
@@ -76,8 +78,12 @@ export default class Table extends React.Component {
     }
 
     onChangeSorting = (headerName) => {
-        const { onChangeSorting } = this.props;
-        onChangeSorting(headerName);
+        const { onChangeSorting, sortBy, direction } = this.props;
+        let newDirection = direction;
+        if (headerName === sortBy) {
+            newDirection = (direction === 'ASC')? 'DESC' : 'ASC';
+        }
+        onChangeSorting(headerName, newDirection);
     }
 }
 

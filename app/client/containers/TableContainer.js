@@ -14,6 +14,7 @@ import {
     setNumberOfRow,
     setSortBy,
     setActivePage,
+    init,
 } from 'services/table-services';
 
 @connect(state => {
@@ -21,20 +22,29 @@ import {
         filter,
         rowPerPage,
         activeRowPerPage,
-        list,
+        filtredList,
+        maxPage,
         sortBy,
+        direction,
         headers,
         activePage,
-        maxPage,
         activeUser,
     } = state.table;
+
+    // SET PAGES
+    const startAt = ((activePage - 1) * parseInt(activeRowPerPage, 10));
+    const endAt = startAt + parseInt(activeRowPerPage, 10);
+
+    // SLICE
+    const newList = filtredList.slice(startAt, endAt);
 
     return {
         filter,
         rowPerPage,
         activeRowPerPage,
-        list,
+        list: newList,
         sortBy,
+        direction,
         headers,
         activePage,
         maxPage,
@@ -49,12 +59,18 @@ export default class TableContainer extends React.Component {
         activeRowPerPage: React.PropTypes.string,
         list: React.PropTypes.array,
         sortBy: React.PropTypes.string,
+        direction: React.PropTypes.string,
         headers: React.PropTypes.array,
         activePage: React.PropTypes.number,
         maxPage: React.PropTypes.number,
         activeUser: React.PropTypes.string,
 
         dispatch: React.PropTypes.func,
+    }
+
+    componentWillMount() {
+        const { dispatch } = this.props;
+        dispatch(init());
     }
 
     render() {
@@ -64,6 +80,7 @@ export default class TableContainer extends React.Component {
             activeRowPerPage,
             list,
             sortBy,
+            direction,
             headers,
             activePage,
             maxPage,
@@ -97,6 +114,7 @@ export default class TableContainer extends React.Component {
                         headers={headers}
                         list={list}
                         sortBy={sortBy}
+                        direction={direction}
                         activeUser={activeUser}
                         onChangeSorting={onChangeSorting}
                     />
@@ -127,9 +145,9 @@ export default class TableContainer extends React.Component {
         dispatch(setNumberOfRow(row));
     }
 
-    onChangeSorting = (sortBy) => {
+    onChangeSorting = (sortBy, direction) => {
         const { dispatch } = this.props;
-        dispatch(setSortBy(sortBy));
+        dispatch(setSortBy(sortBy, direction));
     }
 }
 

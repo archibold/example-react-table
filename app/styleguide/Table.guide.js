@@ -15,7 +15,7 @@ export default class TableGuideComponent extends React.Component {
 
     render() {
         const { onChangeSorting } = this;
-        const { sortBy } = this.state;
+        const { sortBy, direction } = this.state;
 
         const header = ['Id', 'User name', 'Post title', 'Views', 'Likes', 'Created at'];
 
@@ -45,6 +45,7 @@ export default class TableGuideComponent extends React.Component {
                     <Table
                         headers={header}
                         list={list}
+                        direction={direction}
                         onChangeSorting={onChangeSorting}
                         sortBy={sortBy}
                     />
@@ -54,6 +55,7 @@ export default class TableGuideComponent extends React.Component {
                     <Table
                         headers={header}
                         list={list}
+                        direction={direction}
                         activeUser="Konna"
                         onChangeSorting={onChangeSorting}
                         sortBy={sortBy}
@@ -64,15 +66,7 @@ export default class TableGuideComponent extends React.Component {
         );
     }
 
-    onChangeSorting = (sortBy) => {
-        let value = sortBy;
-        if(this.state.sortBy.indexOf('ASC') !== -1 &&
-            this.state.sortBy.indexOf(sortBy) !== -1) {
-            value += ' DESC';
-        } else {
-            value += ' ASC';
-        }
-
-        this.setState({ sortBy: value });
+    onChangeSorting = (sortBy, direction) => {
+        this.setState({ sortBy, direction });
     }
 }
