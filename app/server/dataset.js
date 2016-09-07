@@ -30,7 +30,7 @@ const list = [{
 },
 {
     Id: 4,
-    'User name': 'Zonna',
+    'User name': 'Andrzej',
     'Post title': 'Suppa',
     Views: 13,
     Likes: 31,
@@ -46,7 +46,7 @@ const list = [{
 },
 {
     Id: 4,
-    'User name': 'Kodna',
+    'User name': 'Andrzej',
     'Post title': 'Suppa',
     Views: 13,
     Likes: 71,
@@ -62,7 +62,7 @@ const list = [{
 },
 {
     Id: 4,
-    'User name': 'Gonna',
+    'User name': 'Andrzej',
     'Post title': 'Suppa',
     Views: 13,
     Likes: 41,

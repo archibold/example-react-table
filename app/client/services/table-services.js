@@ -23,6 +23,7 @@ export function init() {
 
             dispatch(setListAction(restLIST));
             dispatch(setFiltredListAction(restLIST));
+            dispatch(setPaginator());
         });
     };
 }
@@ -31,8 +32,6 @@ export function setFilter(value) {
     return (dispatch, getState) => {
         const {
             list,
-            activeRowPerPage,
-            activePage,
             sortBy,
             direction,
         } = getState().table;
@@ -49,49 +48,14 @@ export function setFilter(value) {
             sortedList = sortByFunc(sortBy, direction, filterList);
         }
         dispatch(setFiltredListAction(sortedList));
-
-        // Set maxPage and activePage
-        const maxPage = Math.ceil(filterList.length / parseInt(activeRowPerPage, 10));
-
-        let inRangeActivePage = activePage;
-
-        if (activePage > maxPage) {
-            inRangeActivePage = maxPage;
-        }
-
-        if (activePage < 1) {
-            inRangeActivePage = 1;
-        }
-
-        dispatch(setMaxPageAction(maxPage));
-        dispatch(setActivePage(inRangeActivePage));
+        dispatch(setPaginator());
     };
 }
 
 export function setNumberOfRow(value) {
-    return (dispatch, getState) => {
-        const {
-            filtredList,
-            activePage,
-        } = getState().table;
-
+    return (dispatch) => {
         dispatch(setActiveRowPerPage(value));
-
-        // SET maxPage and activePage
-        const maxPage = Math.ceil(filtredList.length / parseInt(value, 10));
-        dispatch(setMaxPageAction(maxPage));
-
-        let inRangeActivePage = activePage;
-
-        if (activePage > maxPage) {
-            inRangeActivePage = maxPage;
-        }
-
-        if (activePage < 1) {
-            inRangeActivePage = 1;
-        }
-
-        dispatch(setActivePage(inRangeActivePage));
+        dispatch(setPaginator());
     };
 }
 
@@ -112,6 +76,31 @@ export function setSortBy(value, directionValue) {
         dispatch(setSortByAction(value));
         dispatch(setDirectionAction(directionValue));
         dispatch(setFiltredListAction(sortedList));
+    };
+}
+
+function setPaginator() {
+    return (dispatch, getState) => {
+        const {
+            filtredList,
+            activePage,
+            activeRowPerPage,
+        } = getState().table;
+        const maxPage = Math.ceil(filtredList.length / parseInt(activeRowPerPage, 10));
+        dispatch(setMaxPageAction(maxPage));
+
+        let inRangeActivePage = activePage;
+
+        if (activePage > maxPage) {
+            inRangeActivePage = maxPage;
+        }
+
+        if (activePage < 1) {
+            inRangeActivePage = 1;
+        }
+
+        setMaxPageAction(maxPage);
+        dispatch(setActivePage(inRangeActivePage));
     };
 }
 
