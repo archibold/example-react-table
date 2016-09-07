@@ -20,6 +20,10 @@ export default class Pagination extends React.Component {
         const { maxPage, activePage } = this.props;
         const { onSelect } = this;
 
+        if (maxPage === 0 || maxPage === 1) {
+            return null;
+        }
+
         let inRangeActivePage = activePage;
 
         if (activePage > maxPage) {
